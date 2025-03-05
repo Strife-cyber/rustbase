@@ -1,0 +1,3 @@
+As we all know we are to make an in memory database here that will be able to create, read, update and delete values
+in optimal O(1) time and use a space complexity of maximum O(n) so we have to chose the best data structure to support
+and work through it that is why we must make a very efficient memory.
