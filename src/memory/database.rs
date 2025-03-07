@@ -4,6 +4,7 @@ use std::collections::{HashMap, HashSet};
 
 /// A `Database` is a collection of stores, each identified by a unique name.
 pub struct Database {
+    pub name: String,
     pub stores: HashMap<String, Store>,
 }
 
@@ -13,8 +14,9 @@ impl Database {
     /// # Returns
     ///
     /// Returns a `Database` instance initialized with an empty store collection.
-    pub fn new() -> io::Result<Database> {
+    pub fn new(name: &str) -> io::Result<Database> {
         Ok(Database {
+            name: name.to_string(),
             stores: HashMap::new(),
         })
     }

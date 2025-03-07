@@ -1,13 +1,16 @@
 use std::io;
 use std::any::Any;
+use serde_json::Value;
+use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 
 /// A `Store` is a data structure similar to a table, representing a collection of records with dynamic attributes.
+#[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
 pub struct Store {
     id: i64,                             // ID used to track the next record ID.
     pub name: String,                    // Name of the store.
     attributes: HashSet<String>,         // Set of attributes that define the store.
-    values: HashMap<i64, HashMap<String, Box<dyn Any>>>, // Store's records, keyed by their IDs.
+    values: HashMap<i64, HashMap<String, Value>>, // Store's records, keyed by their IDs.
 }
 
 impl Store {
@@ -55,7 +58,7 @@ impl Store {
     /// # Errors
     ///
     /// Returns an error if the record’s attributes are invalid.
-    pub fn add_record(&mut self, record: HashMap<String, Box<dyn Any>>) -> io::Result<i64> {
+    pub fn add_record(&mut self, record: HashMap<String, Value>) -> io::Result<i64> {
         let record_id = self.id;
         self.validate_attributes(record.keys().cloned().collect())?;
         self.values.insert(record_id, record);
@@ -97,7 +100,7 @@ impl Store {
     /// # Errors
     ///
     /// Returns an error if the record is not found.
-    pub fn update_record(&mut self, id: i64, record: HashMap<String, Box<dyn Any>>) -> io::Result<()> {
+    pub fn update_record(&mut self, id: i64, record: HashMap<String, Value>) -> io::Result<()> {
         if self.values.contains_key(&id) {
             self.delete_record(id)?;
             self.values.insert(id, record);
@@ -119,7 +122,7 @@ impl Store {
     /// # Errors
     ///
     /// Returns an error if the record is not found.
-    pub fn get_record(&mut self, id: i64) -> io::Result<&HashMap<String, Box<dyn Any>>> {
+    pub fn get_record(&mut self, id: i64) -> io::Result<&HashMap<String, Value>> {
         if self.values.contains_key(&id) {
             Ok(&self.values[&id])
         } else {
@@ -138,12 +141,7 @@ impl Store {
         for (id, record) in self.values.iter() {
             let mut cloned_record = HashMap::new();
             for (key, value) in record.iter() {
-                if let Some(clone_value) = value.downcast_ref::<String>() {
-                    cloned_record.insert(key.clone(), Box::new(clone_value.clone()) as Box<dyn Any>);
-                } else if let Some(clone_value) = value.downcast_ref::<i32>() {
-                    cloned_record.insert(key.clone(), Box::new(*clone_value) as Box<dyn Any>);
-                }
-                // Add more types as needed
+                cloned_record.insert(key.clone(), Box::new(value.clone()) as Box<dyn Any>);
             }
             cloned_records.insert(*id, cloned_record);
         }
