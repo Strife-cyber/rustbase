@@ -1,4 +1,3 @@
-use super::structure::*;
 
 #[cfg(test)]
 mod tests {

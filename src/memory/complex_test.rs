@@ -1,8 +1,3 @@
-use maplit::hashmap;
-use serde_json::json;
-use super::structure::Store;
-use std::collections::{HashSet};
-use super::complex::QueryOperator;
 
 #[cfg(test)]
 mod tests {

@@ -1,4 +1,3 @@
-use super::database::*;
 
 #[cfg(test)]
 mod database_tests {

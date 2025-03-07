@@ -1,5 +1,3 @@
-use super::structure::Store;
-use super::database::Database;
 
 #[cfg(test)]
 mod tests {
