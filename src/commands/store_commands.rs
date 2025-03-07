@@ -2,7 +2,9 @@ use std::io;
 use std::io::{BufRead, Write};
 use crate::memory::structure::Store;
 use crate::commands::help::print_store_help;
-use crate::commands::store_functions::{handle_delete_record, handle_filter, handle_filters, handle_get_record, handle_list_records, handle_new_record, handle_print_operators, handle_query, handle_sort};
+use crate::commands::store_functions::{handle_delete_record, handle_filter, handle_filters,
+                                       handle_get_record, handle_list_records, handle_new_record,
+                                       handle_print_operators, handle_query, handle_sort};
 
 pub fn run_store_command_loop(mut store: Store) -> io::Result<()> {
     let stdin = io::stdin();

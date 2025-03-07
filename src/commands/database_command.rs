@@ -2,7 +2,8 @@ use std::io;
 use std::io::{BufRead, Write};
 use crate::memory::database::Database;
 use crate::commands::help::{print_database_help};
-use crate::commands::database_functions::{handle_delete_store, handle_list_stores, handle_move_to_store, handle_new_store, handle_save_database};
+use crate::commands::database_functions::{handle_delete_store, handle_list_stores,
+                                          handle_move_to_store, handle_new_store, handle_save_database};
 
 pub fn run_database_command_loop(mut database: Database) -> io::Result<()> {
     let stdin = io::stdin();

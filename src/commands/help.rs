@@ -1,3 +1,10 @@
+pub fn print_help() {
+    println!("Available commands:");
+    println!("  exit                - exit the program");
+    println!("  help                - display this help menu");
+    println!("  database <name>     - switch to a database or load it");
+}
+
 pub fn print_database_help() {
     println!("Available database commands:");
     println!("  help                            - Show this help message");
