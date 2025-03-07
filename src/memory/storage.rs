@@ -1,9 +1,9 @@
-use std::collections::HashMap;
-use std::fs::File;
-use std::io::{self, Read, Write};
 use serde_json;
-use crate::memory::structure::Store;
+use std::fs::File;
+use std::collections::HashMap;
 use super::database::Database;
+use std::io::{self, Read, Write};
+use crate::memory::structure::Store;
 
 impl Database {
     /// Loads the database from a JSON file if it exists.
