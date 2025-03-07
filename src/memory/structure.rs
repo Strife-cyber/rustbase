@@ -7,7 +7,7 @@ use std::collections::{HashMap, HashSet};
 /// A `Store` is a data structure similar to a table, representing a collection of records with dynamic attributes.
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
 pub struct Store {
-    id: i64,                                                   // ID used to track the next record ID.
+    pub(super) id: i64,                                                   // ID used to track the next record ID.
     pub name: String,                                          // Name of the store.
     pub(super) attributes: HashSet<String>,                    // Set of attributes that define the store.
     pub(super) values: HashMap<i64, HashMap<String, Value>>,   // Store's records, keyed by their IDs.
