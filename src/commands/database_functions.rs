@@ -61,7 +61,7 @@ pub fn handle_move_to_store(database: &mut Database, parts: &[&str]) -> io::Resu
 
     // Get a mutable reference to the store and run the command loop
     if let Some(store) = database.get_store_mut(store_name) {
-        run_store_command_loop(*store.unwrap().clone())?;
+        run_store_command_loop(store)?;
     } else {
         println!("Store '{}' not found after creation. This should not happen.", store_name);
     }

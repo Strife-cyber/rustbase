@@ -6,7 +6,7 @@ use crate::commands::store_functions::{handle_delete_record, handle_filter, hand
                                        handle_get_record, handle_list_records, handle_new_record,
                                        handle_print_operators, handle_query, handle_sort};
 
-pub fn run_store_command_loop(mut store: Store) -> io::Result<()> {
+pub fn run_store_command_loop(store: &mut Store) -> io::Result<()> {
     let stdin = io::stdin();
     let mut stdout = io::stdout();
 
@@ -25,15 +25,15 @@ pub fn run_store_command_loop(mut store: Store) -> io::Result<()> {
         match command.as_str() {
             "exit" => break,
             "help" => print_store_help(),
-            "new_record" => handle_new_record(&mut store, &parts)?,
-            "delete_record" => handle_delete_record(&mut store, &parts)?,
-            "list_records" => handle_list_records(&mut store)?,
-            "get_record" => handle_get_record(&mut store, &parts)?,
-            "filter" => handle_filter(&mut store, &parts)?,
-            "filters" => handle_filters(&mut store, &parts)?,
+            "new_record" => handle_new_record(store, &parts)?,
+            "delete_record" => handle_delete_record(store, &parts)?,
+            "list_records" => handle_list_records(store)?,
+            "get_record" => handle_get_record(store, &parts)?,
+            "filter" => handle_filter(store, &parts)?,
+            "filters" => handle_filters(store, &parts)?,
             "operators" => handle_print_operators(),
-            "query" => handle_query(&mut store, &parts)?,
-            "sort" => handle_sort(&mut store, &parts)?,
+            "query" => handle_query(store, &parts)?,
+            "sort" => handle_sort(store, &parts)?,
             _ => println!("Unknown command: {}. Type 'help' for a list of commands.", command)
         }
     }

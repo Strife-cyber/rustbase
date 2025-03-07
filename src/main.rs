@@ -1,10 +1,10 @@
 mod memory;
 mod commands;
 
-use std::io::{stdin, stdout, BufRead, Write};
-use crate::commands::database_command::run_database_command_loop;
 use crate::commands::help::print_help;
 use crate::memory::database::Database;
+use std::io::{stdin, stdout, BufRead, Write};
+use crate::commands::database_command::run_database_command_loop;
 
 fn main() {
     let stdin = stdin();
@@ -39,12 +39,16 @@ fn handle_database(parts: &[&str]) {
 
     let database_name = parts[1];
 
-    if let database = Database::load(database_name) {
-        println!("Database loaded successfully from json file!");
-        run_database_command_loop(database.unwrap()).unwrap();
-        return;
+    // Use match to handle both success and error cases
+    match Database::load(database_name) {
+        Ok(database) => {
+            println!("Database loaded successfully from JSON file!");
+            run_database_command_loop(database).unwrap();
+        }
+        Err(_) => {
+            println!("Database file not found! Creating a new one.");
+            let new_database = Database::new(database_name).unwrap();
+            run_database_command_loop(new_database).unwrap();
+        }
     }
-    println!("Database file not found!");
-    println!("Creating database for this setup");
-    run_database_command_loop(Database::new(database_name).unwrap()).unwrap()
 }

@@ -1,5 +1,4 @@
 use std::io;
-use std::any::Any;
 use serde_json::Value;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -135,13 +134,13 @@ impl Store {
     /// # Returns
     ///
     /// Returns a `HashMap<i64, HashMap<String, Box<dyn Any>>>` containing all records in the store.
-    pub fn get_all_records(&mut self) -> io::Result<HashMap<i64, HashMap<String, Box<dyn Any>>>> {
+    pub fn get_all_records(&mut self) -> io::Result<HashMap<i64, HashMap<String, Value>>> {
         let mut cloned_records = HashMap::new();
 
         for (id, record) in self.values.iter() {
             let mut cloned_record = HashMap::new();
             for (key, value) in record.iter() {
-                cloned_record.insert(key.clone(), Box::new(value.clone()) as Box<dyn Any>);
+                cloned_record.insert(key.clone(), value.clone());
             }
             cloned_records.insert(*id, cloned_record);
         }

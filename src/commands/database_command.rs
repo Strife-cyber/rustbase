@@ -2,8 +2,7 @@ use std::io;
 use std::io::{BufRead, Write};
 use crate::memory::database::Database;
 use crate::commands::help::{print_database_help};
-use crate::commands::database_functions::{handle_delete_store, handle_list_stores,
-                                          handle_move_to_store, handle_new_store, handle_save_database};
+use crate::commands::database_functions::{export_database, handle_delete_store, handle_list_stores, handle_move_to_store, handle_new_store, handle_save_database};
 
 pub fn run_database_command_loop(mut database: Database) -> io::Result<()> {
     let stdin = io::stdin();
@@ -29,6 +28,7 @@ pub fn run_database_command_loop(mut database: Database) -> io::Result<()> {
             "new_store" => handle_new_store(&mut database, &parts)?,
             "delete_store" => handle_delete_store(&mut database, &parts)?,
             "store" => handle_move_to_store(&mut database, &parts)?,
+            "export_sql" => export_database(&mut database),
             _ => println!("Unknown command: {}. Type 'help' for a list of commands.", command)
         }
     }
